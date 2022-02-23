@@ -5,3 +5,5 @@ sb
 .*.tar
 *.static
 .attic
+execelf
+build
