@@ -110,10 +110,8 @@ int transfer_splice(int fdin, int fdout) {
 int main(int argc __attribute__((unused)), char *argv[]) {
   int TS_FD = 0;
 
-  if (argc > 2) {
-    get_tar_file(argv[1], argv[2], 1);
-    char msg[256];
-    exit(0);
+  if (argc == 4 && (strcmp(argv[1], "untar") == 0)) {
+    exit(get_tar_file(argv[2], argv[3], 1));
   }
   const ssize_t f = cksys("memfd_create()", syscall(SYS_memfd_create, "Virtual File", MFD_CLOEXEC));
 
@@ -141,7 +139,13 @@ int get_tar_file(char *tf, char *ef, int *fd){
   mtar_read_data(&tar, p, h.size);
   // fprintf(stderr, " ------  %s> file size: %dB\n", ef, h.size);
 //seek( fd, 0, SEEK_SET );
-  write(fd, p, h.size);
+  int qty = write(fd, p, h.size);
+
+  if (qty == h.size) {
+    return(0);
+  }
+  fprintf(stderr, "fail");
+  return(1);
   //close(fd);
 //memcpy(&buf, p, h.size);
 //return tar.stream;

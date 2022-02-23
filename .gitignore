@@ -14,3 +14,4 @@ strip.sh
 *.swp
 .o
 .e*
+.f
