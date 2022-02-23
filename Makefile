@@ -13,18 +13,24 @@ binaries: prep pexec execelf client tartest
 
 prep:
 	mkdir bin||true
+	echo '' > strip.sh
+	chmod +x strip.sh
 
 test:
 	@bash ./test.sh
 
 %: %.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) $< -o bin/$@
+	echo 'staticx --strip bin/$@ bin/$@.static &' >> strip.sh
 
-%: %.c  
-	echo staticx --strip bin/$@ bin/$@.static >> strip.sh
+#%: %.c  
 
-strip:
-	bash -x strip.sh
+dostrip:
+	echo 'wait' >> strip.sh
+	@bash strip.sh
+
+dotest:
+	@bash test.sh 2>.err
 
 install: binaries
 	cp -v ./bin/* "$(PREFIX)/bin"
