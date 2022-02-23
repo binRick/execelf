@@ -7,3 +7,6 @@ sb
 .attic
 execelf
 build
+python3 -m pip install --upgrade pip
+strip.sh
+.v

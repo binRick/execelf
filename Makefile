@@ -7,21 +7,26 @@ CPPFLAGS += -D_GNU_SOURCE
 
 .PHONY: all clean install
 
-all: build
+all: binaries
 
-build: prep pexec execelf client tartest
+binaries: prep pexec execelf client tartest
 
 prep:
 	mkdir bin||true
 
-test: build
+test:
 	@bash ./test.sh
 
 %: %.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) $< -o bin/$@
-	staticx --strip bin/$@ bin/$@.static
 
-install: build
+%: %.c  
+	echo staticx --strip bin/$@ bin/$@.static >> strip.sh
+
+strip:
+	bash -x strip.sh
+
+install: binaries
 	cp -v ./bin/* "$(PREFIX)/bin"
 
 clean:
