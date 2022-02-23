@@ -1,15 +1,15 @@
 PREFIX ?= /usr/local
 
-CFLAGS ?= -O2
+CFLAGS ?= -O2 -I include/
 CFLAGS += -std=c11 -Wall -Wextra -Wpedantic
 
-CPPFLAGS += -D_GNU_SOURCE
+CPPFLAGS += -D_GNU_SOURCE 
 
 .PHONY: all clean install
 
 all: build
 
-build: prep pexec execelf client
+build: prep pexec execelf client tartest
 
 prep:
 	mkdir bin||true

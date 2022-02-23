@@ -1,0 +1,7 @@
+bin
+.envrc
+sb
+*unc-bac*
+.*.tar
+*.static
+.attic
