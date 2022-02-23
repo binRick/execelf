@@ -1,12 +1,6 @@
 #define _GNU_SOURCE
+#define MAX_ARGS    256
 #include "execelf.h"
-
-
-/*
- * execelf
- * Date: 10/27/21
- * Author: 0x1CA3
- */
 
 
 int file_check(char *filename) {
@@ -17,6 +11,7 @@ int file_check(char *filename) {
     return(1);
   }
   fclose(executable);
+  return(0);
 }
 
 
@@ -33,7 +28,7 @@ int main(int argc, char **argv, char **envp) {
   int  des;
   char *elf;
 
-  if (argc == 992) {
+  if (argc == 1) {
     fprintf(stderr, "Usage: %s <elf_file>\n", argv[0]);
     exit(EXIT_FAILURE);
   } else {
@@ -44,11 +39,10 @@ int main(int argc, char **argv, char **envp) {
       fstat(des, &l_stat);
       elf = malloc(l_stat.st_size);
       read(des, elf, l_stat.st_size);
-      char *args[24] = {
+      char *args[MAX_ARGS] = {
         argv[1],
       };
       for (int i = 2; i < argc; ++i) {
-        fprintf(stderr, "i=>%d, arg=%s\n", i, argv[i]);
         args[i - 2] = argv[i];
       }
       args[argc] = NULL;
