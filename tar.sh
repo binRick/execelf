@@ -2,7 +2,7 @@
 set -eou pipefail
 ARGS="-l"
 
-TAR=$(pwd)/.test-read-1.tar
+TAR=$(pwd)/.binary-files1.tar
 
 get_files() {
 	(find bin -type f) && (find sb -type f)

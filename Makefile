@@ -9,7 +9,7 @@ CPPFLAGS += -D_GNU_SOURCE
 
 all: binaries
 
-binaries: prep pexec execelf client tartest
+binaries: prep pexec execelf client dostrip dotar tartest
 
 prep:
 	mkdir bin||true
@@ -31,6 +31,9 @@ dostrip:
 
 dotest:
 	@bash test.sh 2>.err
+
+dotar:
+	@bash tar.sh
 
 install: binaries
 	cp -v ./bin/* "$(PREFIX)/bin"
