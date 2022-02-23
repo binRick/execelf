@@ -9,7 +9,7 @@ CPPFLAGS += -D_GNU_SOURCE
 
 all: binaries
 
-binaries: prep pexec execelf client dostrip dotar tartest
+binaries: prep pexec-tar pexec execelf client dostrip dotar tartest
 
 prep:
 	mkdir bin||true
